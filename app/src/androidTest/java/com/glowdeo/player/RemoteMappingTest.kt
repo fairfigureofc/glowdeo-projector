@@ -23,6 +23,7 @@ class RemoteMappingTest {
             .getSharedPreferences("glowdeo.mapping.v1", Context.MODE_PRIVATE)
             .edit()
             .clear()
+            .putBoolean("motion", false)
             .commit()
     }
 
