@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -27,10 +28,10 @@ class RemoteMappingTest {
 
     @Test fun remoteMovesCornerAndSavesAcrossActivityRecreation() {
         ActivityScenario.launch(MainActivity::class.java).use { activity ->
-            onView(withText("Map TV blackout")).perform(click())
+            onView(withText("Map TV blackout")).inRoot(isDialog()).perform(click())
             instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT)
             instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
-            onView(withText("Save mapping")).perform(click())
+            onView(withText("Save mapping")).inRoot(isDialog()).perform(click())
             activity.recreate()
             assertEquals(
                 Surface.TV.default.moved(0, .002f, 0f),
@@ -41,10 +42,10 @@ class RemoteMappingTest {
 
     @Test fun discardDoesNotOverwriteSavedMapping() {
         ActivityScenario.launch(MainActivity::class.java).use {
-            onView(withText("Map wall boundary")).perform(click())
+            onView(withText("Map wall boundary")).inRoot(isDialog()).perform(click())
             instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_RIGHT)
             instrumentation.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK)
-            onView(withText("Discard changes")).perform(click())
+            onView(withText("Discard changes")).inRoot(isDialog()).perform(click())
             assertEquals(Surface.WALL.default, PlayerSettings(instrumentation.targetContext).quads[Surface.WALL])
         }
     }
