@@ -7,7 +7,7 @@ Glowdeo 0.2.0 targets the Magcubic HY310X. Other Magcubic models are not yet ver
 1. Open **Camera / room calibration**. Close the older Projection Player and let the projector's autofocus finish.
 2. Choose **Take camera photo · 3 2 1**, allow Camera access, and wait for the countdown and white illumination. A photo is captured one second after the white screen appears.
 3. For mapping, pause the TV on black, dim the room, and choose **Calibrate room with projected patterns**. The scan covers the full projected image, including areas outside the saved wall and TV masks. Keep the projector and room still; Back or leaving the app cancels.
-4. After the scan, select the wall, TV blackout, or featured panel. Use the remote arrows to place each corner on its visible edge in the photo. OK advances corners. A mouse/touch tap places the selected corner. Choose **Save / grid**, or press Menu, to apply the surface and inspect the projected grid.
+4. After the scan, select the wall, TV blackout, or featured panel. Use the remote arrows to place each corner on its visible edge in the photo. OK advances corners. A mouse/touch tap places the selected corner. Press Back for Save / Discard options, choose **Save / grid**, or press Menu, to apply the surface and inspect the projected grid.
 5. Refine with the existing manual corner controls if needed. Repeat for the other surfaces. Saved room calibration and projection corners survive app restarts.
 
 Recalibrate after moving the projector or changing its optical direction, focus, or keystone. A display resolution change also requires recalibration. Automatic motion detection and automatic TV/object recognition are not part of this alpha.

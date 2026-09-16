@@ -281,7 +281,21 @@ class CameraActivity : Activity() {
     }
 
     private fun updateHint() {
-        hint?.text = "${editing?.label} · corner ${(canvas?.selected ?: 0) + 1}/4 · arrows move · OK next · Menu save"
+        hint?.text = "${editing?.label} · corner ${(canvas?.selected ?: 0) + 1}/4 · arrows move · OK next · Back save/options"
+    }
+
+    private fun photoOptions() {
+        dialog =
+            AlertDialog
+                .Builder(this)
+                .setTitle("Photo mapping options")
+                .setItems(arrayOf("Save and show grid", "Keep adjusting", "Discard changes")) { _, which ->
+                    when (which) {
+                        0 -> saveSurface()
+                        1 -> canvas?.requestFocus()
+                        2 -> menu()
+                    }
+                }.show()
     }
 
     private fun saveSurface() {
@@ -357,7 +371,7 @@ class CameraActivity : Activity() {
             KeyEvent.KEYCODE_DPAD_DOWN -> ({ move(0, 1) })
             KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> ::nextCorner
             KeyEvent.KEYCODE_MENU -> ::saveSurface
-            KeyEvent.KEYCODE_BACK -> ({ menu() })
+            KeyEvent.KEYCODE_BACK -> ::photoOptions
             else -> null
         }
 
