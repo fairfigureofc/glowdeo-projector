@@ -14,7 +14,10 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @Suppress("TooManyFunctions")
-class PlayerView(context: Context, val settings: PlayerSettings) : View(context) {
+class PlayerView(
+    context: Context,
+    val settings: PlayerSettings,
+) : View(context) {
     var editing: Surface? = null
     var corner = 0
     var running = true
@@ -29,17 +32,28 @@ class PlayerView(context: Context, val settings: PlayerSettings) : View(context)
         isFocusableInTouchMode = true
     }
 
-    private fun path(surface: Surface): Path = Path().apply {
-        settings.quads.getValue(surface).points.forEachIndexed { index, p ->
-            if (index == 0) moveTo(p.x * width, p.y * height) else lineTo(p.x * width, p.y * height)
+    private fun path(surface: Surface): Path =
+        Path().apply {
+            settings.quads.getValue(surface).points.forEachIndexed { index, p ->
+                if (index == 0) moveTo(p.x * width, p.y * height) else lineTo(p.x * width, p.y * height)
+            }
+            close()
         }
-        close()
-    }
 
-    private fun transform(surface: Surface, w: Float, h: Float): Matrix = Matrix().apply {
-        val target = settings.quads.getValue(surface).points.flatMap { listOf(it.x * width, it.y * height) }.toFloatArray()
-        setPolyToPoly(floatArrayOf(0f, 0f, w, 0f, w, h, 0f, h), 0, target, 0, 4)
-    }
+    private fun transform(
+        surface: Surface,
+        w: Float,
+        h: Float,
+    ): Matrix =
+        Matrix().apply {
+            val target =
+                settings.quads
+                    .getValue(surface)
+                    .points
+                    .flatMap { listOf(it.x * width, it.y * height) }
+                    .toFloatArray()
+            setPolyToPoly(floatArrayOf(0f, 0f, w, 0f, w, h, 0f, h), 0, target, 0, 4)
+        }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -84,7 +98,14 @@ class PlayerView(context: Context, val settings: PlayerSettings) : View(context)
         if (running && (settings.motion || editing != null)) postInvalidateDelayed(33)
     }
 
-    private fun text(canvas: Canvas, value: String, x: Float, y: Float, size: Float, color: Int = Color.WHITE) {
+    private fun text(
+        canvas: Canvas,
+        value: String,
+        x: Float,
+        y: Float,
+        size: Float,
+        color: Int = Color.WHITE,
+    ) {
         paint.style = Paint.Style.FILL
         paint.color = color
         paint.textSize = size
@@ -92,7 +113,15 @@ class PlayerView(context: Context, val settings: PlayerSettings) : View(context)
         canvas.drawText(value, x, y, paint)
     }
 
-    private fun line(canvas: Canvas, x1: Float, y1: Float, x2: Float, y2: Float, color: Int, stroke: Float = 1f) {
+    private fun line(
+        canvas: Canvas,
+        x1: Float,
+        y1: Float,
+        x2: Float,
+        y2: Float,
+        color: Int,
+        stroke: Float = 1f,
+    ) {
         paint.color = color
         paint.strokeWidth = stroke
         canvas.drawLine(x1, y1, x2, y2, paint)
@@ -104,7 +133,10 @@ class PlayerView(context: Context, val settings: PlayerSettings) : View(context)
         text(canvas, "GLOWDEO / ALIGNMENT GRID", 20f, 42f, 24f, lime)
     }
 
-    private fun drawDemo(canvas: Canvas, t: Float) {
+    private fun drawDemo(
+        canvas: Canvas,
+        t: Float,
+    ) {
         text(canvas, "GLOWDEO", 25f, 56f, 35f, lime)
         text(canvas, "YOUR TEAM. YOUR ROOM.", 275f, 56f, 25f)
         text(canvas, "OFFLINE DEMO / SAMPLE DATA", 25f, 94f, 17f, cyan)
@@ -125,7 +157,10 @@ class PlayerView(context: Context, val settings: PlayerSettings) : View(context)
         line(canvas, x, 117f, x + 50f, 117f, lime, 3f)
     }
 
-    private fun drawFeature(canvas: Canvas, t: Float) {
+    private fun drawFeature(
+        canvas: Canvas,
+        t: Float,
+    ) {
         val bob = sin(t * .8f) * 5f
         paint.color = Color.rgb(3, 15, 18)
         paint.style = Paint.Style.FILL
@@ -135,12 +170,20 @@ class PlayerView(context: Context, val settings: PlayerSettings) : View(context)
         paint.strokeWidth = 2f
         canvas.drawOval(RectF(15f, 150f, 185f, 179f), paint)
         canvas.drawCircle(100f, 55f + bob, 24f, paint)
-        val torso = Path().apply {
-            moveTo(72f, 89f + bob); lineTo(48f, 109f + bob); lineTo(59f, 130f + bob)
-            lineTo(70f, 122f + bob); lineTo(70f, 154f + bob); lineTo(130f, 154f + bob)
-            lineTo(130f, 122f + bob); lineTo(141f, 130f + bob); lineTo(152f, 109f + bob)
-            lineTo(128f, 89f + bob); close()
-        }
+        val torso =
+            Path().apply {
+                moveTo(72f, 89f + bob)
+                lineTo(48f, 109f + bob)
+                lineTo(59f, 130f + bob)
+                lineTo(70f, 122f + bob)
+                lineTo(70f, 154f + bob)
+                lineTo(130f, 154f + bob)
+                lineTo(130f, 122f + bob)
+                lineTo(141f, 130f + bob)
+                lineTo(152f, 109f + bob)
+                lineTo(128f, 89f + bob)
+                close()
+            }
         canvas.drawPath(torso, paint)
         text(canvas, "11", 83f, 137f + bob, 35f, lime)
         for (i in 0..11) {
@@ -161,7 +204,13 @@ class PlayerView(context: Context, val settings: PlayerSettings) : View(context)
             paint.color = if (i == corner) Color.YELLOW else Color.WHITE
             paint.style = Paint.Style.FILL
             canvas.drawCircle(point.x * width, point.y * height, if (i == corner) 11f else 6f, paint)
-            text(canvas, "${i + 1}", (point.x * width + 14).coerceAtMost(width - 24f), (point.y * height + 24).coerceAtMost(height - 8f), 20f)
+            text(
+                canvas,
+                "${i + 1}",
+                (point.x * width + 14).coerceAtMost(width - 24f),
+                (point.y * height + 24).coerceAtMost(height - 8f),
+                20f,
+            )
         }
     }
 }

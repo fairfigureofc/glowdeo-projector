@@ -4,9 +4,9 @@ Standalone repository for the Android projector receiver. **Glowdeo** is the sel
 
 ## Status
 
-This initial import preserves the custom native camera helper, loopback bridge and Android bridge startup code from the HY310X prototype. It also includes its sanitized Mac companion. It is **not yet a complete Gradle app or a distributable APK**. The installed v3 was assembled from a Chromium/AOSP Browser2-derived shell; the next milestone is a clean, reproducible Android source build with reviewed third-party notices.
+A clean Kotlin/Gradle Android app is now implemented under `app/`: offline demo playback, alignment grid, D-pad controls and saved manual mapping for wall, TV blackout and featured panel. Build and test results are documented with each release; source presence alone does not mean a build has passed.
 
-No compiled APKs, pairing credentials, private room photos, sports footage, or room-specific scenes are tracked. Existing local APKs are unchanged and should not be offered as a general-purpose friend release.
+See [standalone alpha setup and limitations](docs/standalone-alpha.md). The `prototype/` directory is reference-only and is not compiled into the new app. No private pairing keys, personal room photos or sports footage are included.
 
 ## Scope
 
@@ -32,7 +32,7 @@ python3 -m unittest discover -s tests -v
 
 Examples: `feat(pairing): add code entry`, `fix(mapping): restore corners after restart`, `test(player): cover offline launch`. Use `!` and a `BREAKING CHANGE:` footer for incompatible changes.
 
-A GitHub workflow checks commit messages and repository tooling. It **does not build or test Android yet**; Android build/lint/device jobs belong in the first clean-app milestone.
+GitHub workflows check Conventional Commits, Android Lint, ktlint, detekt and unit tests, build APKs, and run emulator mapping tests. Real-projector acceptance remains a separate release gate.
 
 See [quality and testing](docs/quality-and-testing.md), [friend release](docs/friend-release.md), and [migration plan](docs/migration.md).
 

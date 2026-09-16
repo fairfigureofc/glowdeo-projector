@@ -18,7 +18,11 @@ class RemoteMappingTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
 
     @Before fun resetSettings() {
-        instrumentation.targetContext.getSharedPreferences("glowdeo.mapping.v1", Context.MODE_PRIVATE).edit().clear().commit()
+        instrumentation.targetContext
+            .getSharedPreferences("glowdeo.mapping.v1", Context.MODE_PRIVATE)
+            .edit()
+            .clear()
+            .commit()
     }
 
     @Test fun remoteMovesCornerAndSavesAcrossActivityRecreation() {

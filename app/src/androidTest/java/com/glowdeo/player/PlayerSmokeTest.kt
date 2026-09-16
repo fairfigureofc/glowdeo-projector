@@ -11,7 +11,11 @@ import org.junit.runner.RunWith
 class PlayerSmokeTest {
     @Test fun mappingSurvivesReload() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        context.getSharedPreferences("glowdeo.mapping.v1", Context.MODE_PRIVATE).edit().clear().commit()
+        context
+            .getSharedPreferences("glowdeo.mapping.v1", Context.MODE_PRIVATE)
+            .edit()
+            .clear()
+            .commit()
         val settings = PlayerSettings(context)
         val changed = Surface.TV.default.moved(0, .02f, .01f)
         settings.quads[Surface.TV] = changed
@@ -20,6 +24,10 @@ class PlayerSmokeTest {
         val loaded = PlayerSettings(context)
         assertEquals(changed, loaded.quads[Surface.TV])
         assertEquals(false, loaded.motion)
-        context.getSharedPreferences("glowdeo.mapping.v1", Context.MODE_PRIVATE).edit().clear().commit()
+        context
+            .getSharedPreferences("glowdeo.mapping.v1", Context.MODE_PRIVATE)
+            .edit()
+            .clear()
+            .commit()
     }
 }
