@@ -14,7 +14,7 @@
 
 Install the APK through your device's normal package installer (you may need to allow that file manager to install apps). Open Glowdeo from the normal or Android TV launcher. Select Map wall boundary, then Map TV blackout, then Map featured panel. Arrows move the selected corner; OK selects the next corner. Back opens Save/options. Save each surface. Choose Play offline demo. Press OK or tap to reopen the menu.
 
-When mapping the lower corners, the temporary controls may overlap the projection; they disappear during playback. Android Home always leaves the app. Changes are persisted only when saved. Returning to the app opens the controls. The grid also honors the TV blackout.
+When mapping the lower corners, the temporary controls may overlap the projection; they disappear during playback. Android Home always leaves the app. Changes are persisted only when saved. A fresh launch opens the controls. The grid also honors the TV blackout.
 
 ## Boundaries
 
