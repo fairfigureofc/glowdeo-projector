@@ -1,7 +1,7 @@
 # Clean Android app milestone
 
-1. Choose the product name and application ID. Keep this repository named projector-player until then.
-2. Create a Kotlin/Gradle Android app with fullscreen local playback and remote-friendly navigation. Establish minimum Android/WebView support through tests, not the projector's settings label alone.
+1. Established: Glowdeo, application ID `com.glowdeo.player`, repository `glowdeo-projector`.
+2. Implemented: standalone Kotlin/Gradle app with native Canvas playback, remote navigation and locally saved manual mapping. Minimum Android 6 is configured; hardware compatibility requires device tests. See standalone-alpha.md.
 3. Move generic scene rendering and calibration into versioned assets; isolate hardware-specific camera code behind an optional capability interface.
 4. Add explicit controller setup and an expiring pairing flow against the Laravel API contract. No shared keys or personal addresses in code.
 5. Add durable room profiles, offline asset cache, acknowledged scene commands and controlled reconnect behavior.

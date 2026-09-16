@@ -3,7 +3,7 @@
 First target: manual mapping and offline demo playback on explicitly tested Android projectors. Camera-assisted calibration is optional. The HY310X camera access relies on its firmware and is not a portable Android camera guarantee.
 
 Before sharing:
-- Replace the hardcoded Mac endpoint and shared build key with in-app controller setup and per-device pairing. Unpair/revoke/reset must work without a developer tool.
+- The standalone alpha excludes the prototype bridge and has no network endpoint or shared build key. Future controller support requires per-device pairing and in-app revocation.
 - Provide neutral bundled demo artwork; omit personal photos and unlicensed third-party sports footage.
 - Show supported features and an actionable fallback when a camera, WebView or rendering capability is missing.
 - Produce a signed release APK from the clean source build. Choose the production application ID and privately back up its signing key before the first alpha; future updates require a compatible signature and increasing versionCode.

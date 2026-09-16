@@ -1,10 +1,10 @@
 # Android quality gates
 
-Recommended Kotlin toolchain for the clean Android application:
+Configured Kotlin toolchain for the standalone Android application:
 
 - Android Lint: Android-specific compatibility, resource, accessibility and lifecycle problems. Make release lint errors fail the build.
 - ktlint: Kotlin formatting and style. Use one formatting tool and configuration; avoid duplicate formatter rules in detekt.
-- detekt: Kotlin complexity and suspicious-code analysis. Add after the first Kotlin module exists and pin a compatible version.
+- detekt: Kotlin complexity and suspicious-code analysis. Version pinned with the Android toolchain.
 - For retained C code: compiler warnings and clang-tidy/static analysis, plus host-side protocol/parser tests. Android/Kotlin tools do not cover C or smali.
 
 Pin compatible Gradle, Android Gradle Plugin, Kotlin and tool versions. Commit the wrapper and dependency locks/verification metadata; never use floating `latest` versions in CI.
@@ -17,7 +17,7 @@ Pin compatible Gradle, Android Gradle Plugin, Kotlin and tool versions. Commit t
 4. Emulator/instrumented tests: first launch, pairing and revocation, remote D-pad focus, Back/Home/resume, configuration persistence, camera-denied/no-camera operation, unavailable controller and malformed messages. Use Espresso or Compose UI tests to match the chosen UI toolkit; use UI Automator where system dialogs/remote interaction require it.
 5. Run changes involving rendering, storage, Wi-Fi or lifecycle on an actual projector.
 
-Planned commands after Gradle plugins are wired: `./gradlew ktlintCheck detekt lintDebug testDebugUnitTest assembleDebug` and `./gradlew connectedDebugAndroidTest`. These tasks do not exist in this prototype import yet.
+Current checks: `./gradlew ktlintCheck detekt lintDebug testDebugUnitTest assembleDebug` and `./gradlew connectedDebugAndroidTest`. These tasks are configured in the Android APK workflow. Pairing, network and camera tests apply when those features are introduced; the current alpha has none of these capabilities.
 
 ## Release candidate checks
 

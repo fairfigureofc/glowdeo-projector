@@ -42,11 +42,12 @@ class MainActivity : Activity() {
             }
         controls.addView(hint)
         val row = LinearLayout(this)
+        val buttonHeight = (48 * resources.displayMetrics.density).toInt()
         listOf("←" to Pair(-1, 0), "↑" to Pair(0, -1), "↓" to Pair(0, 1), "→" to Pair(1, 0)).forEach { (label, direction) ->
-            row.addView(button(label) { move(direction.first, direction.second) }, LinearLayout.LayoutParams(0, 48, 1f))
+            row.addView(button(label) { move(direction.first, direction.second) }, LinearLayout.LayoutParams(0, buttonHeight, 1f))
         }
-        row.addView(button("Next corner") { nextCorner() }, LinearLayout.LayoutParams(0, 48, 2f))
-        row.addView(button("Save / options") { editMenu() }, LinearLayout.LayoutParams(0, 48, 2f))
+        row.addView(button("Next corner") { nextCorner() }, LinearLayout.LayoutParams(0, buttonHeight, 2f))
+        row.addView(button("Save / options") { editMenu() }, LinearLayout.LayoutParams(0, buttonHeight, 2f))
         controls.addView(row)
         root.addView(controls, android.widget.FrameLayout.LayoutParams(-1, -2, Gravity.BOTTOM))
         setContentView(root)
@@ -69,7 +70,8 @@ class MainActivity : Activity() {
     @Suppress("DEPRECATION")
     private fun immersive() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -251,24 +253,39 @@ class MainActivity : Activity() {
         dialog?.show()
     }
 
-    private fun editingAction(keyCode: Int): (() -> Unit)? = when (keyCode) {
-        KeyEvent.KEYCODE_DPAD_LEFT -> { { move(-1, 0) } }
-        KeyEvent.KEYCODE_DPAD_RIGHT -> { { move(1, 0) } }
-        KeyEvent.KEYCODE_DPAD_UP -> { { move(0, -1) } }
-        KeyEvent.KEYCODE_DPAD_DOWN -> { { move(0, 1) } }
-        KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> ::nextCorner
-        KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_MENU -> ::editMenu
-        else -> null
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        val action = if (player.editing != null) {
-            editingAction(keyCode)
-        } else if (keyCode in listOf(KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_MENU, KeyEvent.KEYCODE_BACK)) {
-            ::showMenu
-        } else {
-            null
+    private fun editingAction(keyCode: Int): (() -> Unit)? =
+        when (keyCode) {
+            KeyEvent.KEYCODE_DPAD_LEFT -> {
+                { move(-1, 0) }
+            }
+            KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                { move(1, 0) }
+            }
+            KeyEvent.KEYCODE_DPAD_UP -> {
+                { move(0, -1) }
+            }
+            KeyEvent.KEYCODE_DPAD_DOWN -> {
+                { move(0, 1) }
+            }
+            KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> ::nextCorner
+            KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_MENU -> ::editMenu
+            else -> null
         }
+
+    override fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean {
+        val action =
+            if (player.editing != null) {
+                editingAction(keyCode)
+            } else if (keyCode in
+                listOf(KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_MENU, KeyEvent.KEYCODE_BACK)
+            ) {
+                ::showMenu
+            } else {
+                null
+            }
         action?.invoke()
         return action != null || super.onKeyDown(keyCode, event)
     }
