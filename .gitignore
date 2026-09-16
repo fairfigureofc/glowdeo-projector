@@ -24,3 +24,6 @@ __pycache__/
 *.jpg
 *.webp
 .DS_Store
+
+**/.cxx/
+**/.externalNativeBuild/

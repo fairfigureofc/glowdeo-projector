@@ -2,6 +2,7 @@ package com.glowdeo.player
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.KeyEvent
@@ -82,6 +83,12 @@ class MainActivity : Activity() {
     override fun onResume() {
         super.onResume()
         if (::player.isInitialized) {
+            if (player.editing == null) {
+                val saved = PlayerSettings(this)
+                settings.quads.putAll(saved.quads)
+                settings.grid = saved.grid
+                settings.motion = saved.motion
+            }
             player.running = true
             player.invalidate()
         }
@@ -101,6 +108,7 @@ class MainActivity : Activity() {
         if (dialog?.isShowing == true) return
         val choices =
             arrayOf(
+                "Camera / room calibration",
                 "Play offline demo",
                 "Show alignment grid",
                 "Map wall boundary",
@@ -118,27 +126,28 @@ class MainActivity : Activity() {
                 .setItems(choices) { _, which ->
                     dialog = null
                     when (which) {
-                        0 -> {
+                        0 -> startActivity(Intent(this, CameraActivity::class.java))
+                        1 -> {
                             settings.grid = false
                             settings.save()
                             player.invalidate()
                         }
-                        1 -> {
+                        2 -> {
                             settings.grid = true
                             settings.save()
                             player.invalidate()
                         }
-                        2 -> beginEditing(Surface.WALL)
-                        3 -> beginEditing(Surface.TV)
-                        4 -> beginEditing(Surface.FEATURE)
-                        5 -> {
+                        3 -> beginEditing(Surface.WALL)
+                        4 -> beginEditing(Surface.TV)
+                        5 -> beginEditing(Surface.FEATURE)
+                        6 -> {
                             settings.motion = !settings.motion
                             settings.save()
                             player.invalidate()
                         }
-                        6 -> confirmReset()
-                        7 -> about()
-                        8 -> finish()
+                        7 -> confirmReset()
+                        8 -> about()
+                        9 -> finish()
                     }
                 }.setNegativeButton("Close", null)
                 .create()
@@ -241,13 +250,13 @@ class MainActivity : Activity() {
         dialog =
             AlertDialog
                 .Builder(this)
-                .setTitle("Glowdeo 0.1.0 alpha")
+                .setTitle("Glowdeo 0.2.0 alpha")
                 .setMessage(
                     "Standalone offline demo. All sports figures are sample data.\n\n" +
                         "Press OK or tap for controls. Map wall first, then TV blackout and featured panel. " +
                         "Arrows move corners; OK selects the next corner; Back opens Save/options.\n\n" +
-                        "No account, network, camera, or developer mode is needed to run this app. " +
-                        "Phone pairing and live stats are planned, not connected.",
+                        "Camera calibration targets the Magcubic HY310X. Photos stay on this device. " +
+                        "No account or developer mode is needed. Phone pairing and live stats are planned.",
                 ).setPositiveButton("Got it", null)
                 .create()
         dialog?.show()

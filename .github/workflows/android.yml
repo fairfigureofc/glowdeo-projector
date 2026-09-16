@@ -65,12 +65,16 @@ jobs:
             sleep 2
             adb shell screencap -p /sdcard/glowdeo-demo.png
             adb pull /sdcard/glowdeo-demo.png .
+            adb pull /sdcard/glowdeo-camera-controls.png .
+            adb pull /sdcard/glowdeo-photo-mapping.png .
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: glowdeo-device-check
           path: |
             glowdeo-demo.png
+            glowdeo-camera-controls.png
+            glowdeo-photo-mapping.png
             glowdeo-failure.png
             glowdeo-device.log
             app/build/reports/androidTests/

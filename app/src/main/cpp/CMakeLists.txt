@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.22.1)
+project(glowdeo_camera C)
+add_library(glowdeo_camera SHARED camera.c)
+target_compile_options(glowdeo_camera PRIVATE -Wall -Wextra -Werror -fstack-protector-strong)
+target_link_options(glowdeo_camera PRIVATE -Wl,-z,max-page-size=16384)

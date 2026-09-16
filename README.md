@@ -4,13 +4,13 @@ Standalone repository for the Android projector receiver. **Glowdeo** is the sel
 
 ## Status
 
-A clean Kotlin/Gradle Android app is now implemented under `app/`: offline demo playback, alignment grid, D-pad controls and saved manual mapping for wall, TV blackout and featured panel. Build and test results are documented with each release; source presence alone does not mean a build has passed.
+The Kotlin/Gradle app includes offline playback, alignment grids, remote controls and saved manual mapping. The 0.2 camera alpha adds on-device HY310X camera capture, structured-light calibration, and marking projection surfaces directly on a room photo. See [HY310X camera setup and hardware verification](docs/hy310x-camera.md).
 
 See [standalone alpha setup and limitations](docs/standalone-alpha.md). The `prototype/` directory is reference-only and is not compiled into the new app. No private pairing keys, personal room photos or sports footage are included.
 
 ## Scope
 
-The Android projector app pairs with a controller, receives scenes, renders fullscreen and persists mapping. iOS/Android phone controllers and the Laravel web/API are separate clients/projects. A projector without Android can eventually use an external supported Android player via HDMI; that path remains untested.
+Glowdeo targets Magcubic projectors, starting with the HY310X. The current app renders fullscreen and stores camera/manual calibration locally. Controller pairing, scene delivery, iOS/Android phone apps and the Laravel web/API are future work. Other Magcubic models require individual camera and firmware validation.
 
 ## Prototype source
 
